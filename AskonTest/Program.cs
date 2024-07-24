@@ -1,4 +1,13 @@
+using AskonTest;
+using AskonTest.Database;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AskonTestContext>(opt =>
+{
+	opt.UseInMemoryDatabase("MyMemoryDatabase");
+});
 
 // Add services to the container.
 
@@ -15,6 +24,8 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
+app.UseMiddleware<GlobalExceptionHandler>();
 
 app.UseHttpsRedirection();
 
